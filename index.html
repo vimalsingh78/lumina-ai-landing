@@ -144,7 +144,8 @@
       }
     });
     document.addEventListener('mouseout', e => {
-      if (e.target.closest('a, button, [data-cursor-hover]')) {
+      const hovered = e.target.closest('a, button, [data-cursor-hover]');
+      if (hovered && !hovered.contains(e.relatedTarget)) {
         document.body.classList.remove('cursor-hover');
       }
     });
