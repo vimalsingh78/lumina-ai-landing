@@ -184,6 +184,96 @@
     @media (max-width: 768px) {
       .nav-links { display: none; }
     }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    #particle-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 100px;
+    }
+    #hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(99,102,241,0.4);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary-light);
+      letter-spacing: 0.05em;
+      margin-bottom: 32px;
+      background: rgba(99,102,241,0.08);
+      opacity: 0;
+    }
+    #hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    .hero-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    #hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+      opacity: 0;
+    }
+    .hero-cta-row { margin-bottom: 16px; opacity: 0; }
+    .btn-lg { padding: 14px 32px; font-size: 1rem; }
+    .hero-trust {
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0;
+    }
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+    .scroll-chevron {
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      animation: chevron-bounce 1.5s ease-in-out infinite;
+    }
+    @keyframes chevron-bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(6px); }
+    }
   </style>
 </head>
 <body>
@@ -205,6 +295,28 @@
       <a href="#cta" class="btn btn-primary">Start Learning</a>
     </div>
   </nav>
+  <!-- Hero -->
+<section id="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="hero-glow"></div>
+  <div class="container hero-content">
+    <div id="hero-badge">✦ 50,000+ Students Enrolled</div>
+    <h1 id="hero-headline">
+      <span class="hero-line">Master AI &amp;</span>
+      <span class="hero-line gradient-text">Data Science</span>
+    </h1>
+    <p id="hero-sub">Learn cutting-edge AI, machine learning, and data engineering from industry experts. Build real projects. Get certified.</p>
+    <div class="hero-cta-row">
+      <button id="hero-btn" class="btn btn-primary btn-lg" data-cursor-hover>
+        Start Learning Free →
+      </button>
+    </div>
+    <p class="hero-trust">No credit card · 14-day free trial · Cancel anytime</p>
+  </div>
+  <div class="hero-scroll-indicator">
+    <div class="scroll-chevron"></div>
+  </div>
+</section>
   <!-- sections go here -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
