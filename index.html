@@ -675,6 +675,40 @@
       .footer-top { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: span 2; }
     }
+
+    /* ── HUE SHIFT OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(245,158,11,0.02) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+      filter: var(--scroll-hue-filter, hue-rotate(0deg));
+      transition: filter 0.1s;
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .hero-line, #hero-badge, #hero-sub, .hero-cta-row, .hero-trust,
+      .hero-scroll-indicator, .course-card, .testimonial-card, .timeline-step {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .scroll-chevron { animation: none; }
+    }
+
+    /* ── POLISH ── */
+    ::selection { background: rgba(99,102,241,0.3); color: var(--text); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
   </style>
 </head>
 <body>
@@ -1201,6 +1235,27 @@
         trigger: '#footer',
         start: 'top 85%',
       }
+    });
+
+    // ── LENIS SMOOTH SCROLL ──
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // ── SCROLL-BASED HUE SHIFT ──
+    lenis.on('scroll', ({ progress }) => {
+      const hue = progress * 30;
+      document.documentElement.style.setProperty(
+        '--scroll-hue-filter',
+        `hue-rotate(${hue}deg)`
+      );
     });
 
     // JS goes here
