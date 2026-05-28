@@ -482,6 +482,199 @@
       .timeline-steps { grid-template-columns: 1fr; }
       .timeline-line { display: none; }
     }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials {
+      padding: 120px 0;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .testimonial-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: transform;
+    }
+    .testimonial-stars {
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .testimonial-quote {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #cbd5e1;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .author-role {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    @media (max-width: 900px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── CTA ── */
+    #cta {
+      padding: 140px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, rgba(245,158,11,0.05) 50%, transparent 70%);
+      animation: cta-pulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes cta-pulse {
+      from { transform: scale(1); opacity: 0.8; }
+      to   { transform: scale(1.1); opacity: 1; }
+    }
+    .cta-inner { position: relative; z-index: 2; }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cta-subtitle {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .cta-form {
+      display: flex;
+      gap: 12px;
+      max-width: 520px;
+      margin: 0 auto 20px;
+      justify-content: center;
+    }
+    .cta-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 14px 24px;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cta-input::placeholder { color: var(--muted); }
+    .cta-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+    }
+    .cta-trust {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    @media (max-width: 540px) {
+      .cta-form { flex-direction: column; align-items: center; }
+      .cta-input { width: 100%; }
+    }
+
+    /* ── FOOTER ── */
+    #footer {
+      padding: 80px 0 40px;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+    .footer-gradient-line {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+    .footer-tagline {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin: 8px 0 20px;
+      line-height: 1.6;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+    .social-icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-icon:hover { border-color: var(--primary); color: var(--primary-light); }
+    .footer-links-group { display: flex; flex-direction: column; gap: 12px; }
+    .footer-links-group h4 {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .footer-links-group a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links-group a:hover { color: var(--text); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: span 2; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: span 2; }
+    }
   </style>
 </head>
 <body>
@@ -634,7 +827,115 @@
     </div>
   </div>
 </section>
-  <!-- sections go here -->
+  <!-- Testimonials -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">✦ Reviews</span>
+      <h2 class="section-title">Loved by <span class="gradient-text">Learners</span></h2>
+      <p class="section-subtitle">Join thousands of professionals who transformed their careers with Lumina AI.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card" data-parallax-offset="-20">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"The deep learning course completely changed my career. Within 3 months of completing the MLOps track, I landed a senior ML engineer role. Best investment I've made."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">SJ</div>
+          <div>
+            <div class="author-name">Sarah Johnson</div>
+            <div class="author-role">ML Engineer @ Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-parallax-offset="0">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"I went from knowing nothing about data science to building production pipelines. The hands-on projects are incredibly well designed. Lumina AI is in a class of its own."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">MC</div>
+          <div>
+            <div class="author-name">Marcus Chen</div>
+            <div class="author-role">Data Scientist @ Stripe</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-parallax-offset="20">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"The NLP and Computer Vision tracks are absolutely world-class. I've taken Coursera, edX, Fast.ai — nothing compares. The AI-assisted feedback alone is worth the price."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #10b981, #06b6d4);">AP</div>
+          <div>
+            <div class="author-name">Aisha Patel</div>
+            <div class="author-role">AI Researcher @ OpenAI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- CTA -->
+<section id="cta">
+  <div class="cta-bg-glow"></div>
+  <div class="container cta-inner">
+    <span class="section-label">✦ Get Started Today</span>
+    <h2 class="cta-title">Start Your <span class="gradient-text">AI Journey</span> Today</h2>
+    <p class="cta-subtitle">Join 50,000+ learners. Free 14-day trial. No credit card required.</p>
+    <form class="cta-form" onsubmit="return false;">
+      <input type="email" class="cta-input" placeholder="Enter your email address" />
+      <button type="submit" class="btn btn-primary btn-lg" data-cursor-hover>
+        Get Started Free →
+      </button>
+    </form>
+    <p class="cta-trust">✓ Free 14-day trial &nbsp;·&nbsp; ✓ Cancel anytime &nbsp;·&nbsp; ✓ No credit card</p>
+  </div>
+</section>
+  <!-- Footer -->
+<footer id="footer">
+  <div class="footer-gradient-line"></div>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div style="font-family: var(--font-display); font-size:1.4rem; font-weight:800;">Lumina<span style="color:var(--primary)">AI</span></div>
+        <p class="footer-tagline">The fastest path to AI mastery.</p>
+        <div class="footer-social">
+          <a href="#" class="social-icon" data-cursor-hover>𝕏</a>
+          <a href="#" class="social-icon" data-cursor-hover>in</a>
+          <a href="#" class="social-icon" data-cursor-hover>gh</a>
+          <a href="#" class="social-icon" data-cursor-hover>yt</a>
+        </div>
+      </div>
+      <div class="footer-links-group">
+        <h4>Product</h4>
+        <a href="#">Courses</a>
+        <a href="#">Learning Paths</a>
+        <a href="#">Certifications</a>
+        <a href="#">Enterprise</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>Learn</h4>
+        <a href="#">Machine Learning</a>
+        <a href="#">Deep Learning</a>
+        <a href="#">Data Science</a>
+        <a href="#">MLOps</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>Legal</h4>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Lumina AI. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
@@ -845,6 +1146,59 @@
       scrub: 1,
       onUpdate: self => {
         document.querySelector('.timeline-line-fill').style.width = (self.progress * 100) + '%';
+      }
+    });
+
+    // ── TESTIMONIALS ──
+    gsap.to('.testimonial-card', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: '.testimonials-grid',
+        start: 'top 80%',
+      }
+    });
+
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+      const offset = parseFloat(card.dataset.parallaxOffset || 0);
+      gsap.to(card, {
+        y: offset,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#testimonials',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        }
+      });
+    });
+
+    // ── CTA SECTION ──
+    gsap.from('.cta-title, .cta-subtitle, .cta-form, .cta-trust', {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#cta',
+        start: 'top 80%',
+      }
+    });
+
+    // ── FOOTER ──
+    gsap.from('#footer .footer-top > *', {
+      opacity: 0,
+      y: 20,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#footer',
+        start: 'top 85%',
       }
     });
 
