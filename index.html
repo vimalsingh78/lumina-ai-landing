@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>AIWowTools — Free Online Tools. No Signup.</title>
   <meta charset="UTF-8">
+  <title>AIWowTools — Free Online Tools. No Signup.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -99,6 +99,7 @@
     .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
     @media (max-width: 600px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .nav-links { display: none; } }
   </style>
 </head>
 <body>
@@ -253,8 +254,8 @@
       </div>
       <div class="footer-col">
         <h4>Tools</h4>
-        <a href="#" onclick="document.querySelector('[data-cat=text]').click();return false;">Text Tools</a>
-        <a href="#" onclick="document.querySelector('[data-cat=image]').click();return false;">Image Tools</a>
+        <a href="#tools" class="footer-tab-link" data-cat="text">Text Tools</a>
+        <a href="#tools" class="footer-tab-link" data-cat="image">Image Tools</a>
         <a href="#tools">All Tools</a>
       </div>
       <div class="footer-col">
@@ -268,31 +269,36 @@
   </footer>
 
   <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Lenis smooth scroll
-    const lenis = new Lenis();
+    const lenis = new Lenis({ lerp: reducedMotion ? 1 : 0.1 });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(time => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
-    gsap.registerPlugin(ScrollTrigger);
     // Nav glass on scroll
     const nav = document.querySelector('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
 
     // GSAP load animations
-    gsap.from('nav', { opacity: 0, y: -20, duration: 0.6, ease: 'power2.out' });
-    const tl = gsap.timeline({ delay: 0.2 });
-    tl.from('#hero-badge', { opacity: 0, y: 20, duration: 0.5 })
-      .from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.2')
-      .from('.hero-sub',   { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
-      .from('.search-bar', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3');
+    if (!reducedMotion) {
+      gsap.from('nav', { opacity: 0, y: -20, duration: 0.6, ease: 'power2.out' });
+      const tl = gsap.timeline({ delay: 0.2 });
+      tl.from('#hero-badge', { opacity: 0, y: 20, duration: 0.5 })
+        .from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.2')
+        .from('.hero-sub',   { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
+        .from('.search-bar', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3');
+    }
 
     // Category tab filter
     const tabBtns = document.querySelectorAll('.tab-btn');
     const toolCards = document.querySelectorAll('.tool-card');
+    const searchInput = document.getElementById('search-input');
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         tabBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        searchInput.value = '';
         const cat = btn.dataset.cat;
         toolCards.forEach(card => {
           const show = cat === 'all' || card.dataset.cat === cat;
@@ -315,8 +321,16 @@
       });
     });
 
+    // Footer tab links
+    document.querySelectorAll('.footer-tab-link').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(`.tab-btn[data-cat="${a.dataset.cat}"]`).click();
+        document.getElementById('tools').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
     // Search filter
-    const searchInput = document.getElementById('search-input');
     function doSearch() {
       const q = searchInput.value.toLowerCase().trim();
       tabBtns.forEach(b => b.classList.remove('active'));
@@ -333,13 +347,18 @@
     document.getElementById('search-btn').addEventListener('click', doSearch);
 
     // Scroll-triggered card reveal
-    gsap.utils.toArray('.tool-card').forEach((card, i) => {
-      gsap.fromTo(card, { opacity: 0, scale: 0.9, y: 20 }, {
-        opacity: 1, scale: 1, y: 0, duration: 0.4,
-        delay: (i % 4) * 0.08,
-        scrollTrigger: { trigger: card, start: 'top 92%' }
+    if (!reducedMotion) {
+      gsap.utils.toArray('.tool-card').forEach((card, i) => {
+        gsap.fromTo(card, { opacity: 0, scale: 0.9, y: 20 }, {
+          opacity: 1, scale: 1, y: 0, duration: 0.4,
+          delay: (i % 4) * 0.08,
+          scrollTrigger: { trigger: card, start: 'top 92%' }
+        });
       });
-    });
+    } else {
+      // No GSAP animations — make cards visible immediately
+      document.querySelectorAll('.tool-card').forEach(card => { card.style.opacity = '1'; });
+    }
 
     // Stats counter
     document.querySelectorAll('.stat-num').forEach(el => {
@@ -347,10 +366,13 @@
       const suffix = el.dataset.suffix || '';
       ScrollTrigger.create({
         trigger: el, start: 'top 90%', once: true,
-        onEnter: () => gsap.to({ val: 0 }, {
-          val: target, duration: 1.5, ease: 'power2.out',
-          onUpdate() { el.textContent = Math.round(this.targets()[0].val) + suffix; }
-        })
+        onEnter: () => {
+          if (target === 0) { el.textContent = '0' + suffix; return; }
+          gsap.to({ val: 0 }, {
+            val: target, duration: 1.5, ease: 'power2.out',
+            onUpdate() { el.textContent = Math.round(this.targets()[0].val) + suffix; }
+          });
+        }
       });
     });
   </script>
